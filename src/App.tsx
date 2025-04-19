@@ -1,17 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import "./App.css";
 function App() {
-  const [length, setLength] = useState(8);
-  const [isNumber, setisNumber] = useState(false);
-  const [isChar, setisChar] = useState(false);
-  const [pass, setpass] = useState("");
-  const [btnText, setBtnText] = useState("Copy");
+  const [length, setLength] = useState<number>(8);
+  const [isNumber, setisNumber] = useState<boolean>(false);
+  const [isChar, setisChar] = useState<boolean>(false);
+  const [pass, setpass] = useState<string>("");
+  const [btnText, setBtnText] = useState<string>("Copy");
 
-  const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const numbers = "0123456789";
-  const characters = "!@#$%^&*()_-+=<>?";
+  const letters: string =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const numbers: string = "0123456789";
+  const characters: string = "!@#$%^&*()_-+=<>?";
 
-  const passwordRef = useRef(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   function copyToClipBoard() {
     // to have blue bg on selected password
@@ -28,13 +29,13 @@ function App() {
   }
 
   const generatePassword = useCallback(() => {
-    let Password = "";
+    let Password: string = "";
     let charPool = letters;
     if (isNumber) charPool = charPool + numbers;
     if (isChar) charPool = charPool + characters;
 
     for (let i = 0; i < length; i++) {
-      let randomIndex = Math.floor(Math.random() * charPool.length);
+      let randomIndex: number = Math.floor(Math.random() * charPool.length);
       Password = Password + charPool[randomIndex];
     }
     setpass(Password);
@@ -75,7 +76,7 @@ function App() {
                 min={8}
                 value={length}
                 max={20}
-                onChange={(event) => setLength(event.target.value)}
+                onChange={(event) => setLength(Number(event.target.value))}
               />
               <label>Lenght: {length}</label>
             </div>
@@ -84,7 +85,8 @@ function App() {
             <div>
               <input
                 type="checkbox"
-                onClick={() => setisNumber(!isNumber)}
+                checked={isNumber}
+                onChange={() => setisNumber(!isNumber)}
                 className="cursor-pointer"
               />
               <label htmlFor=""> Number:{isNumber ? "Yes" : "No"}</label>
